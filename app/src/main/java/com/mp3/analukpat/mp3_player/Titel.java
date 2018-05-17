@@ -8,7 +8,7 @@ public class Titel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_titel);
-        //sdf
+        setContentView(R.layout.activity_einzelwiedergabe);
+
     }
 }
