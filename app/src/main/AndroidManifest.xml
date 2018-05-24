@@ -13,13 +13,16 @@
         <activity android:name=".TabInterpretenActivity" />
         <activity android:name=".TabPlaylistsActivity" />
         <activity android:name=".AddToPlaylistActivity" />
-        <activity android:name=".TabWiedergabeActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+        <activity android:name=".TabWiedergabeActivity"/>
+        <activity android:name=".TabWiedergabeListeActivity" />
+        <activity android:name=".MainTabsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".TabWiedergabeListeActivity"></activity>
+        <activity android:name=".WiedergabeTabsActivity"></activity>
     </application>
 
 </manifest>
