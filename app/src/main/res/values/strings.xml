@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MP3-Player</string>
+    <string name="tab_Titel">Titel</string>
+    <string name="tab_Interpreten">Interpreten</string>
+    <string name="tab_Playlists">Playlists</string>
+    <string name="tab_Wiedergabe">Wiedergabe</string>
+    <string name="tab_WiedergabeListe">Wiedergabeliste</string>
+    <string name="option_Playlist">Zu Playlist hinzufügen</string>
+    <string name="option_Widergabeliste">Zu Wiedergabe hinzufügen</string>
+    <string name="add_to_Playlist">Hinzufügen</string>
+    <string name="added">Hinzugefügt</string>
+
 </resources>

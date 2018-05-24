@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Titel">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".TabTitelActivity" />
+        <activity android:name=".TabInterpretenActivity" />
+        <activity android:name=".TabPlaylistsActivity" />
+        <activity android:name=".AddToPlaylistActivity" />
+        <activity android:name=".TabWiedergabeActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity android:name=".TabWiedergabeListeActivity"></activity>
     </application>
 
 </manifest>
