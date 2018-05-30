@@ -9,5 +9,10 @@
     <string name="option_Widergabeliste">Zu Wiedergabe hinzufügen</string>
     <string name="add_to_Playlist">Hinzufügen</string>
     <string name="added">Hinzugefügt</string>
+    <string name="title_activity_wiedergabe">WiedergabeActivity</string>
+    <string name="tab_text_1">Wiedergabe</string>
+    <string name="tab_text_2">Wiedergabeliste</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>
