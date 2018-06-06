@@ -9,60 +9,65 @@
 
     <Button
         android:id="@+id/Stopp"
-        style="@android:style/MediaButton"
-        android:layout_width="51dp"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="33dp"
-        android:background="@drawable/Stop" />
+        android:layout_alignTop="@id/Play_Pause"
+        android:layout_marginTop="60dp"
+        android:layout_alignRight="@id/Play_Pause"
+        android:layout_marginRight="150dip"
+        android:background="@drawable/stop" />
 
     <Button
         android:id="@+id/Previous"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/Next"
-        android:layout_marginLeft="110dp"
-        android:background="@drawable/Previous" />
+        android:layout_alignRight="@id/Play_Pause"
+        android:layout_marginRight="60dip"
+        android:layout_alignBottom="@id/Play_Pause"
+        android:background="@drawable/previous" />
 
     <Button
         android:id="@+id/Next"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/Play_Pause"
-        android:layout_marginRight="109dp"
-        android:background="@drawable/Next" />
+        android:layout_alignLeft="@id/Play_Pause"
+        android:layout_marginLeft="60dip"
+        android:layout_alignBottom="@id/Play_Pause"
+        android:background="@drawable/next" />
 
     <Button
         android:id="@+id/Play_Pause"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="75dp"
-        android:background="@drawable/Play" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dip"
+        android:background="@drawable/play" />
 
     <Button
         android:id="@+id/Shuffle"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/Stopp"
-        android:layout_alignTop="@+id/Next"
-        android:background="@drawable/Shuffle" />
+        android:layout_alignBottom="@id/Play_Pause"
+        android:layout_alignRight="@id/Play_Pause"
+        android:layout_marginRight="150dip"
+        android:background="@drawable/shuffle" />
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/Play_Pause"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="129dp"
-        android:layout_marginTop="145dp" />
+        android:layout_marginTop="15dp"
+        android:clickable="true"
+        android:fadeScrollbars="true"
+        android:max="90"
+        android:visibility="visible" />
+
 </RelativeLayout>
