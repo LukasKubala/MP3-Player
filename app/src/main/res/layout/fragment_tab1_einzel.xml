@@ -7,10 +7,62 @@
     android:layout_height="match_parent"
     tools:context=".WiedergabeActivity">
 
-    <TextView
-        android:id="@+id/section_label"
+    <Button
+        android:id="@+id/Stopp"
+        style="@android:style/MediaButton"
+        android:layout_width="51dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="33dp"
+        android:background="@drawable/Stop" />
+
+    <Button
+        android:id="@+id/Previous"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tab 1 Einzelwiedergabe"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/Next"
+        android:layout_marginLeft="110dp"
+        android:background="@drawable/Previous" />
 
+    <Button
+        android:id="@+id/Next"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/Play_Pause"
+        android:layout_marginRight="109dp"
+        android:background="@drawable/Next" />
+
+    <Button
+        android:id="@+id/Play_Pause"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="75dp"
+        android:background="@drawable/Play" />
+
+    <Button
+        android:id="@+id/Shuffle"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Stopp"
+        android:layout_alignTop="@+id/Next"
+        android:background="@drawable/Shuffle" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="129dp"
+        android:layout_marginTop="145dp" />
 </RelativeLayout>

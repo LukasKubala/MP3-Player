@@ -1,5 +1,5 @@
 package com.mp3.analukpat.mp3_player;
-
+// Anzeige aller Playlists
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

@@ -1,4 +1,5 @@
 package com.mp3.analukpat.mp3_player;
+// Widergabe eines einzelnen Liedes
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

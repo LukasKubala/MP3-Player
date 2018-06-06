@@ -1,5 +1,5 @@
 package com.mp3.analukpat.mp3_player;
-
+//Activity, die die Tabs Wiedergabe und Wiedergabeliste aufruft
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
