@@ -1,5 +1,8 @@
 package com.mp3.analukpat.mp3_player;
 //Activity, die die Tabs Wiedergabe und Wiedergabeliste aufruft
+import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,9 +20,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WiedergabeActivity extends AppCompatActivity {
+    //Buttons instanziieren
+    private Button playbtn, pausebtn;
+    private MediaPlayer mediaPlayer;
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,10 +46,44 @@ public class WiedergabeActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    //VolumeBar
+    private SeekBar volume_bar;
+    private AudioManager audioManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wiedergabe);
+
+        //Initialisierung Buttons Play
+        playbtn= findViewById(R.id.Play);
+        pausebtn= findViewById(R.id.Pause);
+
+        //Instanz mediaPlayer
+        mediaPlayer=MediaPlayer.create(this, R.raw.lied1);
+
+        //Listener
+        playbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(WiedergabeActivity.this, "Es wird abgespielt", Toast.LENGTH_SHORT).show();
+                buttonsState(false,true);
+                mediaPlayer.start();
+            }
+        });
+
+        pausebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(WiedergabeActivity.this, "Pause", Toast.LENGTH_SHORT).show();
+                buttonsState(true, false);
+                mediaPlayer.pause();
+            }
+        });
+
+        //Volumebar
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        initControls();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,15 +100,48 @@ public class WiedergabeActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //Wenn Wiedergabe zu Ende
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                Toast.makeText(WiedergabeActivity.this, "Fertig", Toast.LENGTH_SHORT).show();
+                buttonsState(true, false);
             }
         });
 
+    }
+    //wechseln zw. Zustand der Buttons play und pause
+    private void buttonsState(boolean playB, boolean pauseB) {
+        playbtn.setEnabled(playB);
+        pausebtn.setEnabled(pauseB);
+    }
+
+    //für Volumebar
+    private void initControls() {
+        try {
+            volume_bar= findViewById(R.id.volume_bar);
+            audioManager=(AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            volume_bar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+            volume_bar.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+            volume_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,progress,0);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
 
 

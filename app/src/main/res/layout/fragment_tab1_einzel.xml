@@ -12,10 +12,10 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/Play_Pause"
-        android:layout_marginTop="60dp"
-        android:layout_alignRight="@id/Play_Pause"
+        android:layout_alignRight="@id/Play"
+        android:layout_alignTop="@id/Play"
         android:layout_marginRight="150dip"
+        android:layout_marginTop="60dp"
         android:background="@drawable/stop" />
 
     <Button
@@ -23,9 +23,9 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@id/Play_Pause"
+        android:layout_alignBottom="@id/Play"
+        android:layout_alignRight="@id/Play"
         android:layout_marginRight="60dip"
-        android:layout_alignBottom="@id/Play_Pause"
         android:background="@drawable/previous" />
 
     <Button
@@ -33,19 +33,19 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/Play_Pause"
+        android:layout_alignBottom="@id/Play"
+        android:layout_alignLeft="@id/Play"
         android:layout_marginLeft="60dip"
-        android:layout_alignBottom="@id/Play_Pause"
         android:background="@drawable/next" />
 
     <Button
-        android:id="@+id/Play_Pause"
+        android:id="@+id/Play"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="130dip"
         android:background="@drawable/play" />
 
     <Button
@@ -53,21 +53,26 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/Play_Pause"
-        android:layout_alignRight="@id/Play_Pause"
+        android:layout_alignBottom="@id/Play"
+        android:layout_alignRight="@id/Play"
         android:layout_marginRight="150dip"
         android:background="@drawable/shuffle" />
 
     <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="190dp"
+        android:id="@+id/volume_bar"
+        android:layout_width="214dp"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/Play_Pause"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:clickable="true"
-        android:fadeScrollbars="true"
-        android:max="90"
-        android:visibility="visible" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="103dp" />
+
+    <Button
+        android:id="@+id/Pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="235dp"
+        android:text="ButtonPause" />
 
 </RelativeLayout>
