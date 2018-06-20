@@ -18,9 +18,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
     private Button playbtn, pausebtn;
     private MediaPlayer mediaPlayer;
 
-    //VolumeBar
-    private SeekBar volume_bar;
-    private AudioManager audioManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,7 +32,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
         //Instanz mediaPlayer
         mediaPlayer=MediaPlayer.create(this.getContext(), R.raw.lied1);
         mediaPlayer.setOnPreparedListener(this);
-        mediaPlayer.prepareAsync();
+
 
 
         //Listener
