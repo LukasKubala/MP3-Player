@@ -60,10 +60,21 @@
 
     <SeekBar
         android:id="@+id/volume_bar"
-        android:layout_width="214dp"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layerType="software"
+        android:max="10"
+        android:progress="2"
+        android:rotation="270" />
+
+    <SeekBar
+        android:id="@+id/music_bar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="103dp" />
+        android:layout_marginTop="99dp"
+        android:layout_toStartOf="@+id/Play" />
 
 </RelativeLayout>

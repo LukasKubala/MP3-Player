@@ -19,12 +19,43 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
 
     private Button playbtn;
     private MediaPlayer mediaPlayer;
-    private SeekBar lautbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_tab1_einzel, container, false);
+
+
+        //VolumeBar
+        SeekBar volume_bar = (SeekBar) rootView.findViewById(R.id.volume_bar);
+        volume_bar.setMax(10);
+
+
+        volume_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float volumeValue = (float) progress / 10;
+                System.out.print("Lautstärke: " + progress + " VolumeValue: " + volumeValue);
+                mediaPlayer.setVolume(volumeValue, volumeValue);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+
+
+
+
+
 
 
         //Initialisierung Buttons Play
