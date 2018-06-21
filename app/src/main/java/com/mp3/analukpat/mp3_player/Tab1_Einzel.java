@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListener {
 
     private Button playbtn;
@@ -25,17 +28,28 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_tab1_einzel, container, false);
 
+        //Initialisierung der vertikalen VolumeBar mit custom Seekbar
+        VerticalSeekBar vertical_volume_bar = (VerticalSeekBar) rootView.findViewById (R.id.volume_seekbar);
+        vertical_volume_bar.setMax(10);
 
-        //VolumeBar
-        SeekBar volume_bar = (SeekBar) rootView.findViewById(R.id.volume_bar);
-        volume_bar.setMax(10);
+
+        //Initialisierung Buttons Play
+        playbtn = (Button) rootView.findViewById(R.id.Play);
 
 
-        volume_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        //Instanz mediaPlayer
+        mediaPlayer=MediaPlayer.create(this.getContext(), R.raw.lied1); // This.getContext() weil das ein Tab innerhalb einer anderen view ist
+
+
+        //Instanz der SeekBar, die den Musikfortschritt anzeigt
+        final SeekBar fortschrittsbar = (SeekBar) rootView.findViewById(R.id.music_bar);
+
+
+        //OnSeekBarChangeListener für die veritcal_volume_bar
+        vertical_volume_bar.setOnSeekBarChangeListener(new VerticalSeekBar.OnSeekBarChangeListener(){
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 float volumeValue = (float) progress / 10;
-                System.out.print("Lautstärke: " + progress + " VolumeValue: " + volumeValue);
                 mediaPlayer.setVolume(volumeValue, volumeValue);
             }
 
@@ -50,39 +64,30 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
             }
         });
 
-
-
-
-
-
-
-
-
-        //Initialisierung Buttons Play
-        playbtn = (Button) rootView.findViewById(R.id.Play);
-
-
-        //Instanz mediaPlayer
-        mediaPlayer=MediaPlayer.create(this.getContext(), R.raw.lied1); // This.getContext() weil das ein Tab innerhalb einer anderen view ist
-
-
-
         //Listener für Play und Pause
         playbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mediaPlayer.isPlaying()) {
                     Toast.makeText(rootView.getContext(), "Pause", Toast.LENGTH_SHORT).show();
-                    //buttonsState(true, false);
                     mediaPlayer.pause();
                     playbtn.setBackground(ContextCompat.getDrawable(rootView.getContext(), R.drawable.play));
                 }else if(!mediaPlayer.isPlaying()){
                 Toast.makeText(rootView.getContext(), "Es wird abgespielt", Toast.LENGTH_SHORT).show();
-                //buttonsState(false,true);
                 onPrepared(mediaPlayer);
                 playbtn.setBackground(ContextCompat.getDrawable(rootView.getContext(), R.drawable.pause));}
             }
         });
+
+        //Timer der alle 1000ms die Methode run() ausführt
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                fortschrittsbar.setMin(0);
+                fortschrittsbar.setMax(mediaPlayer.getDuration());
+                fortschrittsbar.setProgress(mediaPlayer.getCurrentPosition());
+            }
+        },0, 1000);
 
 
         //Wenn Wiedergabe zu Ende
@@ -94,6 +99,23 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
             }
         });
         return rootView;
+
+    }
+
+    public void run(SeekBar seekbar){
+        int currentPosition= mediaPlayer.getCurrentPosition();
+        int total = mediaPlayer.getDuration();
+        while (mediaPlayer!=null && currentPosition<total) {
+            try {
+                Thread.sleep(1000);
+                currentPosition= mediaPlayer.getCurrentPosition();
+            } catch (InterruptedException e) {
+                return;
+            } catch (Exception e) {
+                return;
+            }
+            seekbar.setProgress(currentPosition);
+        }
 
     }
 

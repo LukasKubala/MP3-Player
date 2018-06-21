@@ -59,22 +59,22 @@
         android:background="@drawable/shuffle" />
 
     <SeekBar
-        android:id="@+id/volume_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layerType="software"
-        android:max="10"
-        android:progress="2"
-        android:rotation="270" />
-
-    <SeekBar
         android:id="@+id/music_bar"
-        android:layout_width="wrap_content"
+        android:layout_width="171dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="99dp"
-        android:layout_toStartOf="@+id/Play" />
+        android:layout_alignLeft="@id/Previous"
+        android:layout_alignRight="@id/Next"
+        android:layout_alignBottom="@id/Stopp"
+        android:layout_centerHorizontal="true"
+        android:padding="10dip"
+        />
+
+    <com.mp3.analukpat.mp3_player.VerticalSeekBar
+        android:id="@+id/volume_seekbar"
+        android:layout_width="wrap_content"
+        android:layout_height="300dip"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dip"
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>
