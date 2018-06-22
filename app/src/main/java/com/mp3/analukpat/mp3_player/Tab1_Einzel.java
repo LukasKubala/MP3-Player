@@ -15,12 +15,16 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.*;
+import android.net.Uri;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListener {
 
-    private Button playbtn;
+    private Button playbtn, stoppbtn, previousbtn, nextbtn, shufflebtn;
     private MediaPlayer mediaPlayer;
 
     @Override
@@ -29,16 +33,30 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
         final View rootView = inflater.inflate(R.layout.fragment_tab1_einzel, container, false);
 
         //Initialisierung der vertikalen VolumeBar mit custom Seekbar
-        VerticalSeekBar vertical_volume_bar = (VerticalSeekBar) rootView.findViewById (R.id.volume_seekbar);
+        final VerticalSeekBar vertical_volume_bar = (VerticalSeekBar) rootView.findViewById (R.id.volume_seekbar);
         vertical_volume_bar.setMax(10);
 
 
-        //Initialisierung Buttons Play
+        //Initialisierung der Buttons
         playbtn = (Button) rootView.findViewById(R.id.Play);
+        stoppbtn = (Button) rootView.findViewById(R.id.Stopp);
+        previousbtn = (Button) rootView.findViewById(R.id.Previous);
+        nextbtn = (Button) rootView.findViewById(R.id.Next);
+        shufflebtn = (Button) rootView.findViewById(R.id.Shuffle);
+
+
+        //Versuch eine Liste von Liedern zu erstellen, später müsste sowas dann in die Klasse Wiedergabeliste?
+        final ArrayList<Integer> wiedergabeliste = new ArrayList<>();
+        wiedergabeliste.add(R.raw.lied1);
+        wiedergabeliste.add(R.raw.lied2);
+        wiedergabeliste.add(R.raw.lied3);
+        wiedergabeliste.add(R.raw.lied4);
+        final ListIterator<Integer> liedIterator = wiedergabeliste.listIterator(0);
 
 
         //Instanz mediaPlayer
-        mediaPlayer=MediaPlayer.create(this.getContext(), R.raw.lied1); // This.getContext() weil das ein Tab innerhalb einer anderen view ist
+        //mediaPlayer=MediaPlayer.create(this.getContext(), R.raw.lied1); // This.getContext() weil das ein Tab innerhalb einer anderen view ist
+        mediaPlayer = MediaPlayer.create(this.getContext(), wiedergabeliste.get(0));
         mediaPlayer.setVolume(0,0);
 
 
@@ -105,13 +123,47 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
             }
         });
 
+        //Listener für Stopp
+        stoppbtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(rootView.getContext(), "Stopp", Toast.LENGTH_SHORT).show();
+                mediaPlayer.stop();
+                playbtn.setBackground(ContextCompat.getDrawable(rootView.getContext(), R.drawable.play));
+                mediaPlayer.release();
+                mediaPlayer = MediaPlayer.create(rootView.getContext(), wiedergabeliste.get(0));
+                mediaPlayer.setVolume((float)vertical_volume_bar.getProgress()/10, (float)vertical_volume_bar.getProgress()/10);
+                fortschrittsbar.setProgress(0);
+            }
+        });
+
+        //Listener für Next
+        nextbtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //Listener für Previous
+        previousbtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         //Timer der alle 1000ms die Methode run() ausführt
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                fortschrittsbar.setMin(0);
-                fortschrittsbar.setMax(mediaPlayer.getDuration());
-                fortschrittsbar.setProgress(mediaPlayer.getCurrentPosition());
+                if (mediaPlayer.isPlaying()) {
+                    fortschrittsbar.setMin(0);
+                    fortschrittsbar.setMax(mediaPlayer.getDuration());
+                    fortschrittsbar.setProgress(mediaPlayer.getCurrentPosition());
+                }else{
+                }
             }
         },0, 1000);
 
@@ -120,12 +172,22 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                Toast.makeText(rootView.getContext(), "Fertig", Toast.LENGTH_SHORT).show();
-                playbtn.setBackground(ContextCompat.getDrawable(rootView.getContext(), R.drawable.play));
+                if(liedIterator.hasNext()){
+                    mediaPlayer.stop();
+                    try {
+                        mediaPlayer.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mediaPlayer.selectTrack(0);
+                }else {
+                    Toast.makeText(rootView.getContext(), "Fertig", Toast.LENGTH_SHORT).show();
+                    playbtn.setBackground(ContextCompat.getDrawable(rootView.getContext(), R.drawable.play));
+                    mediaPlayer.reset();
+                }
             }
         });
         return rootView;
-
     }
 
 // Player vorbereiten
