@@ -39,10 +39,15 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
 
         //Instanz mediaPlayer
         mediaPlayer=MediaPlayer.create(this.getContext(), R.raw.lied1); // This.getContext() weil das ein Tab innerhalb einer anderen view ist
+        mediaPlayer.setVolume(0,0);
 
 
         //Instanz der SeekBar, die den Musikfortschritt anzeigt
         final SeekBar fortschrittsbar = (SeekBar) rootView.findViewById(R.id.music_bar);
+
+        //Variable, die den Titel des aktuell abgespielten Liedes speichert, diese wird dann an alle anderen Activities übergeben
+        String beispielhafterLiedNameZurUebergabe = "beispielhafter Name eines Liedes";
+
 
 
         //OnSeekBarChangeListener für die veritcal_volume_bar
@@ -58,6 +63,27 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
 
             }
 
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        //Listener für fortschrittsbar !! bei den Bars immer Min und Max setzen !! mp.seekTo spult das Lied auf eine bestimmte ms Zahl
+        fortschrittsbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser) {
+                    fortschrittsbar.setMin(0);
+                    fortschrittsbar.setMax(mediaPlayer.getDuration());
+                    mediaPlayer.seekTo(progress);
+                    fortschrittsbar.setProgress(progress);
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
@@ -95,27 +121,10 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 Toast.makeText(rootView.getContext(), "Fertig", Toast.LENGTH_SHORT).show();
-
+                playbtn.setBackground(ContextCompat.getDrawable(rootView.getContext(), R.drawable.play));
             }
         });
         return rootView;
-
-    }
-
-    public void run(SeekBar seekbar){
-        int currentPosition= mediaPlayer.getCurrentPosition();
-        int total = mediaPlayer.getDuration();
-        while (mediaPlayer!=null && currentPosition<total) {
-            try {
-                Thread.sleep(1000);
-                currentPosition= mediaPlayer.getCurrentPosition();
-            } catch (InterruptedException e) {
-                return;
-            } catch (Exception e) {
-                return;
-            }
-            seekbar.setProgress(currentPosition);
-        }
 
     }
 
