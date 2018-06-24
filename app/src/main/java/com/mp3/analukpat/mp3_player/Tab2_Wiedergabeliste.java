@@ -14,7 +14,10 @@ public class Tab2_Wiedergabeliste extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tab2wiedergabeliste, container, false);
-        return rootView;
 
+
+
+
+        return rootView;
     }
 }

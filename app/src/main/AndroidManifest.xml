@@ -12,7 +12,7 @@
         <activity android:name=".AddToPlaylistActivity" />
         <activity
             android:name=".WiedergabeActivity"
-            android:label="@string/title_activity_wiedergabe"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

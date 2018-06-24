@@ -2,6 +2,7 @@ package com.mp3.analukpat.mp3_player;
 //Activity, die die Tabs Wiedergabe und Wiedergabeliste aufruft
 import com.mp3.analukpat.mp3_player.R;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.design.widget.TabLayout;
@@ -29,9 +30,6 @@ import android.widget.Toast;
 
 public class WiedergabeActivity extends AppCompatActivity {
 
-
-
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -46,7 +44,6 @@ public class WiedergabeActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
 
 
     @Override
@@ -67,6 +64,18 @@ public class WiedergabeActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        /*
+        //Button zum Menuwechsel holen
+        Button menuwechsel_in_wiedergabe = (Button) findViewById(R.id.menu_switch_in_wiedergabe);
+
+        //Instanziierung des Button zum Menuwechsel
+        menuwechsel_in_wiedergabe.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(this, TitelansichtActivity.class);
+                startActivity(intent);
+            }
+        });*/
 
 
     }

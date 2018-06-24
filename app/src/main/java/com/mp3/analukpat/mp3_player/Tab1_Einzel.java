@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.util.TimerTask;
 
 public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListener {
 
+    private TextView current_time, total_time;
     private Button playbtn, stoppbtn, previousbtn, nextbtn, shufflebtn;
     private MediaPlayer mediaPlayer;
 
@@ -44,6 +46,9 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
         nextbtn = (Button) rootView.findViewById(R.id.Next);
         shufflebtn = (Button) rootView.findViewById(R.id.Shuffle);
 
+        //Initialisierung der TextViews
+        current_time = (TextView) rootView.findViewById(R.id.tab1_einzel_current_duration);
+        total_time = (TextView) rootView.findViewById(R.id.tab1_einzel_total_duration);
 
         //Versuch eine Liste von Liedern zu erstellen, später müsste sowas dann in die Klasse Wiedergabeliste?
         final ArrayList<Integer> wiedergabeliste = new ArrayList<>();
@@ -134,6 +139,8 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
                 mediaPlayer = MediaPlayer.create(rootView.getContext(), wiedergabeliste.get(0));
                 mediaPlayer.setVolume((float)vertical_volume_bar.getProgress()/10, (float)vertical_volume_bar.getProgress()/10);
                 fortschrittsbar.setProgress(0);
+                current_time.setText("0:00");
+                total_time.setText("0:00");
             }
         });
 
@@ -153,15 +160,48 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
             }
         });
 
+        //Instanz der MainActivity, da UI Änderungen nur von der MainActivity vorgenommen werden können
+        //mit der Methode runOnUiThread können dann Methoden von der MainActivity ausgeführt werden lassen
+        final WiedergabeActivity wdgact = new WiedergabeActivity();
 
         //Timer der alle 1000ms die Methode run() ausführt
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (mediaPlayer.isPlaying()) {
+                    //kontinuierliches Bewegen der Bar um den Fortschritt des Liedes anzuzeigen
                     fortschrittsbar.setMin(0);
                     fortschrittsbar.setMax(mediaPlayer.getDuration());
                     fortschrittsbar.setProgress(mediaPlayer.getCurrentPosition());
+
+                    
+                    //wdgact ist eine Instanz der WiedergabeActivity und direkt über dem Timer instanziiert
+                    //alles was innerhalb dieser Methode steht wird nicht von Tab1_Einzel sondern von WiedergabeActivity ausgeführt
+                    wdgact.runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+                            //Untere TextView, die anzeigt bei welcher Minute das aktuelle Lied ist
+                            int umrechnungsekunden_current = (int)(mediaPlayer.getCurrentPosition()/1000);
+                            int anzahlminuten_current = umrechnungsekunden_current/60;
+                            int anzahlsekunden_current = umrechnungsekunden_current-anzahlminuten_current*60;
+                            if(anzahlsekunden_current<10) {
+                                current_time.setText(anzahlminuten_current + ":0" + anzahlsekunden_current);
+                            }
+                            else{
+                                current_time.setText(anzahlminuten_current+":"+anzahlsekunden_current);
+                            }
+                            //Untere TextView, die anzeigt wie lang das abgespielte Lied insgesamt ist !!
+                            // die Methode muss später woanders hin, hier wird sie unnötig oft ausgeführt
+                            int umrechnungsekunden_total = (int)(mediaPlayer.getDuration()/1000);
+                            int anzahlminuten_total = umrechnungsekunden_total/60;
+                            int anzahlsekunden_total = umrechnungsekunden_total-anzahlminuten_total*60;
+                            if(anzahlsekunden_total<10) {
+                                total_time.setText(anzahlminuten_total + ":0" + anzahlsekunden_total);
+                            }else{
+                                total_time.setText(anzahlminuten_total+":"+anzahlsekunden_total);
+                            }
+                        }
+                    });
                 }else{
                 }
             }
@@ -172,7 +212,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                if(liedIterator.hasNext()){
+                /*if(liedIterator.hasNext()){
                     mediaPlayer.stop();
                     try {
                         mediaPlayer.prepare();
@@ -180,11 +220,12 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
                         e.printStackTrace();
                     }
                     mediaPlayer.selectTrack(0);
-                }else {
+                    onPrepared(mediaPlayer);
+                }else {*/
                     Toast.makeText(rootView.getContext(), "Fertig", Toast.LENGTH_SHORT).show();
                     playbtn.setBackground(ContextCompat.getDrawable(rootView.getContext(), R.drawable.play));
-                    mediaPlayer.reset();
-                }
+                    mediaPlayer.stop();
+                //}
             }
         });
         return rootView;
