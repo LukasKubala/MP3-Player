@@ -1,26 +1,21 @@
 package com.mp3.analukpat.mp3_player;
 // Activity, die die Tabs Titel, Interpreten und Playlists aufruft
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 
-import android.widget.TextView;
-
-public class TitelansichtActivity extends AppCompatActivity {
+public class TitelansichtActivity extends AppCompatActivity implements View.OnClickListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -30,49 +25,53 @@ public class TitelansichtActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private SectionsPagerAdapter mSectionsPagerAdapter_titelansichten;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private ViewPager mViewPager_titelansichten;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_titelansichten);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter_titelansichten = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager_titelansichten = findViewById(R.id.container);
+
+        // dieser Aufruf crasht die App
+        mViewPager_titelansichten.setAdapter(mSectionsPagerAdapter_titelansichten);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
 
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        mViewPager_titelansichten.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager_titelansichten));
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //Button zum Menuwechsel holen
+        Button menuwechsel_in_titelansicht = (Button) findViewById(R.id.menu_switch_in_titelansicht);
 
+        //Instanziierung des Button zum Menuwechsel
+        menuwechsel_in_titelansicht.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        finish();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity_, menu);
+        getMenuInflater().inflate(R.menu.menu_titelansicht, menu);
         return true;
     }
 
@@ -111,8 +110,10 @@ public class TitelansichtActivity extends AppCompatActivity {
                     return tab1;
                 case 1:
                     Tab2_Interpreten tab2 = new Tab2_Interpreten();
+                    return tab2;
                 case 2:
                     Tab3_Playlists tab3 = new Tab3_Playlists();
+                    return tab3;
                 default:
                     return null;
             }

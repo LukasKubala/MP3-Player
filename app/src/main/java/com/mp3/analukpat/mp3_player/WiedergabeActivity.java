@@ -28,7 +28,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WiedergabeActivity extends AppCompatActivity {
+public class WiedergabeActivity extends AppCompatActivity implements View.OnClickListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -64,22 +64,19 @@ public class WiedergabeActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        /*
+
         //Button zum Menuwechsel holen
         Button menuwechsel_in_wiedergabe = (Button) findViewById(R.id.menu_switch_in_wiedergabe);
 
         //Instanziierung des Button zum Menuwechsel
-        menuwechsel_in_wiedergabe.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(this, TitelansichtActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
-
+        menuwechsel_in_wiedergabe.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, TitelansichtActivity.class);
+        this.startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

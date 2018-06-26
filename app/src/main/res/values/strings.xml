@@ -17,6 +17,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_">activity_</string>
     <string name="tab_text_3">Tab 3</string>
+    <string name="title_activity_titellisten">Titellisten</string>
 
 
 </resources>

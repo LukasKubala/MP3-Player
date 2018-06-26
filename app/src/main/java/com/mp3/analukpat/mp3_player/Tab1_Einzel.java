@@ -174,7 +174,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
                     fortschrittsbar.setMax(mediaPlayer.getDuration());
                     fortschrittsbar.setProgress(mediaPlayer.getCurrentPosition());
 
-                    
+
                     //wdgact ist eine Instanz der WiedergabeActivity und direkt über dem Timer instanziiert
                     //alles was innerhalb dieser Methode steht wird nicht von Tab1_Einzel sondern von WiedergabeActivity ausgeführt
                     wdgact.runOnUiThread(new Runnable(){
