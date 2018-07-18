@@ -50,27 +50,14 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
         current_time = (TextView) rootView.findViewById(R.id.tab1_einzel_current_duration);
         total_time = (TextView) rootView.findViewById(R.id.tab1_einzel_total_duration);
 
-        //Versuch eine Liste von Liedern zu erstellen, später müsste sowas dann in die Klasse Wiedergabeliste?
-        final ArrayList<Integer> wiedergabeliste = new ArrayList<>();
-        wiedergabeliste.add(R.raw.lied1);
-        wiedergabeliste.add(R.raw.lied2);
-        wiedergabeliste.add(R.raw.lied3);
-        wiedergabeliste.add(R.raw.lied4);
-        final ListIterator<Integer> liedIterator = wiedergabeliste.listIterator(0);
-
 
         //Instanz mediaPlayer
-        //mediaPlayer=MediaPlayer.create(this.getContext(), R.raw.lied1); // This.getContext() weil das ein Tab innerhalb einer anderen view ist
-        mediaPlayer = MediaPlayer.create(this.getContext(), wiedergabeliste.get(0));
+        mediaPlayer=MediaPlayer.create(this.getContext(), R.raw.lied1); // This.getContext() weil das ein Tab innerhalb einer anderen view ist
         mediaPlayer.setVolume(0,0);
 
 
         //Instanz der SeekBar, die den Musikfortschritt anzeigt
         final SeekBar fortschrittsbar = (SeekBar) rootView.findViewById(R.id.music_bar);
-
-        //Variable, die den Titel des aktuell abgespielten Liedes speichert, diese wird dann an alle anderen Activities übergeben
-        String beispielhafterLiedNameZurUebergabe = "beispielhafter Name eines Liedes";
-
 
 
         //OnSeekBarChangeListener für die veritcal_volume_bar
@@ -136,7 +123,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
                 mediaPlayer.stop();
                 playbtn.setBackground(ContextCompat.getDrawable(rootView.getContext(), R.drawable.play));
                 mediaPlayer.release();
-                mediaPlayer = MediaPlayer.create(rootView.getContext(), wiedergabeliste.get(0));
+                mediaPlayer=MediaPlayer.create(rootView.getContext(), R.raw.lied1);
                 mediaPlayer.setVolume((float)vertical_volume_bar.getProgress()/10, (float)vertical_volume_bar.getProgress()/10);
                 fortschrittsbar.setProgress(0);
                 current_time.setText("0:00");
