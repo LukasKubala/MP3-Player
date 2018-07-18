@@ -32,6 +32,7 @@ public class Tab1_Titel extends Fragment {
 
        textView = (TextView) rootView.findViewById(R.id.section_label);
 
+       //listview
        listViewTitel = (ListView) rootView.findViewById(R.id.listViewTitel);
 
 
