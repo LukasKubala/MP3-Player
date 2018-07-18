@@ -40,7 +40,7 @@ public class Tab1_Titel extends Fragment {
         //Das ist nicht die externe SD Karte, sondern der interne Speicher!
         pfad_durchsuchen(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)+"");
 
-
+        textView.setText(Environment.DIRECTORY_MUSIC.toString());
 
         ArrayList<String> Liste_der_Titel_als_Strings = new ArrayList<>();
         for(int i = 0; i < titel_liste.size(); i ++){
