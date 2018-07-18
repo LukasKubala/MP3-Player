@@ -66,7 +66,7 @@ public class WiedergabeActivity extends AppCompatActivity implements View.OnClic
 
 
         //Button zum Menuwechsel holen
-        Button menuwechsel_in_wiedergabe = (Button) findViewById(R.id.menu_switch_in_wiedergabe);
+        Button menuwechsel_in_wiedergabe = findViewById(R.id.menu_switch_in_wiedergabe);
 
         //Instanziierung des Button zum Menuwechsel
         menuwechsel_in_wiedergabe.setOnClickListener(this);

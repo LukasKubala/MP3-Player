@@ -55,7 +55,7 @@ public class TitelansichtActivity extends AppCompatActivity implements View.OnCl
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager_titelansichten));
 
         //Button zum Menuwechsel holen
-        Button menuwechsel_in_titelansicht = (Button) findViewById(R.id.menu_switch_in_titelansicht);
+        Button menuwechsel_in_titelansicht = findViewById(R.id.menu_switch_in_titelansicht);
 
         //Instanziierung des Button zum Menuwechsel
         menuwechsel_in_titelansicht.setOnClickListener(this);

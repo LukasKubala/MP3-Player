@@ -35,20 +35,20 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
         final View rootView = inflater.inflate(R.layout.fragment_tab1_einzel, container, false);
 
         //Initialisierung der vertikalen VolumeBar mit custom Seekbar
-        final VerticalSeekBar vertical_volume_bar = (VerticalSeekBar) rootView.findViewById (R.id.volume_seekbar);
+        final VerticalSeekBar vertical_volume_bar = rootView.findViewById (R.id.volume_seekbar);
         vertical_volume_bar.setMax(10);
 
 
         //Initialisierung der Buttons
-        playbtn = (Button) rootView.findViewById(R.id.Play);
-        stoppbtn = (Button) rootView.findViewById(R.id.Stopp);
-        previousbtn = (Button) rootView.findViewById(R.id.Previous);
-        nextbtn = (Button) rootView.findViewById(R.id.Next);
-        shufflebtn = (Button) rootView.findViewById(R.id.Shuffle);
+        playbtn = rootView.findViewById(R.id.Play);
+        stoppbtn = rootView.findViewById(R.id.Stopp);
+        previousbtn = rootView.findViewById(R.id.Previous);
+        nextbtn = rootView.findViewById(R.id.Next);
+        shufflebtn = rootView.findViewById(R.id.Shuffle);
 
         //Initialisierung der TextViews
-        current_time = (TextView) rootView.findViewById(R.id.tab1_einzel_current_duration);
-        total_time = (TextView) rootView.findViewById(R.id.tab1_einzel_total_duration);
+        current_time = rootView.findViewById(R.id.tab1_einzel_current_duration);
+        total_time = rootView.findViewById(R.id.tab1_einzel_total_duration);
 
 
         //Instanz mediaPlayer
@@ -57,7 +57,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
 
 
         //Instanz der SeekBar, die den Musikfortschritt anzeigt
-        final SeekBar fortschrittsbar = (SeekBar) rootView.findViewById(R.id.music_bar);
+        final SeekBar fortschrittsbar = rootView.findViewById(R.id.music_bar);
 
 
         //OnSeekBarChangeListener für die veritcal_volume_bar
@@ -168,7 +168,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
                         @Override
                         public void run() {
                             //Untere TextView, die anzeigt bei welcher Minute das aktuelle Lied ist
-                            int umrechnungsekunden_current = (int)(mediaPlayer.getCurrentPosition()/1000);
+                            int umrechnungsekunden_current = mediaPlayer.getCurrentPosition()/1000;
                             int anzahlminuten_current = umrechnungsekunden_current/60;
                             int anzahlsekunden_current = umrechnungsekunden_current-anzahlminuten_current*60;
                             if(anzahlsekunden_current<10) {
@@ -179,7 +179,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
                             }
                             //Untere TextView, die anzeigt wie lang das abgespielte Lied insgesamt ist !!
                             // die Methode muss später woanders hin, hier wird sie unnötig oft ausgeführt
-                            int umrechnungsekunden_total = (int)(mediaPlayer.getDuration()/1000);
+                            int umrechnungsekunden_total = mediaPlayer.getDuration()/1000;
                             int anzahlminuten_total = umrechnungsekunden_total/60;
                             int anzahlsekunden_total = umrechnungsekunden_total-anzahlminuten_total*60;
                             if(anzahlsekunden_total<10) {

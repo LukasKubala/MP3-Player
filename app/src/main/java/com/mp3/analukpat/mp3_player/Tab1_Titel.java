@@ -30,10 +30,10 @@ public class Tab1_Titel extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tab1_titel, container, false);
 
-       textView = (TextView) rootView.findViewById(R.id.section_label);
+       textView = rootView.findViewById(R.id.section_label);
 
        //listview
-       listViewTitel = (ListView) rootView.findViewById(R.id.listViewTitel);
+       listViewTitel = rootView.findViewById(R.id.listViewTitel);
 
 
        //Dieser Pfad wird durchsucht: storage/emulated/0/Music/
