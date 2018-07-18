@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +33,7 @@ public class Tab1_Titel extends Fragment {
 
        textView = rootView.findViewById(R.id.section_label);
 
-       //listview
-       listViewTitel = rootView.findViewById(R.id.listViewTitel);
+
 
 
        //Dieser Pfad wird durchsucht: storage/emulated/0/Music/
@@ -41,8 +41,8 @@ public class Tab1_Titel extends Fragment {
         pfad_durchsuchen(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)+"");
 
 
-        final ListIterator<File> liedIterator = titel_liste.listIterator(0);
 
+        ArrayList<String> Liste_der_Titel_als_Strings = new ArrayList<>();
         for(int i = 0; i < titel_liste.size(); i ++){
             MediaMetadataRetriever mmr = new MediaMetadataRetriever();
             mmr.setDataSource(titel_liste.get(i).getAbsolutePath());
@@ -52,11 +52,26 @@ public class Tab1_Titel extends Fragment {
             String titleAuthor = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_AUTHOR);
             String titleName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
 
+            Liste_der_Titel_als_Strings.add(titleName);
 
-            textView.setText(textView.getText() + " <<" + titleName + " by " + titleAuthor + ">>");
+            //textView.setText(textView.getText() + " <<" + titleName + " by " + titleAuthor + ">>");
 
 
         }
+
+        //in der onCreate Methode wird der ArrayAdapter erzeugt
+        ArrayAdapter<String> Titel_View_Adapter =
+                new ArrayAdapter<>(
+                        getActivity(), // Die aktuelle Umgebung
+                        R.layout.list_item_titel, // ID der XML-Layout Datei der einzelnen Daten der ListView
+                        R.id.list_item_titel_textview, // ID der TextView
+                        Liste_der_Titel_als_Strings); // Daten in einer ArrayList
+
+
+        //listview
+        listViewTitel = rootView.findViewById(R.id.listViewTitel);
+        listViewTitel.setAdapter(Titel_View_Adapter);
+
         return rootView;
     }
 
@@ -78,7 +93,7 @@ public class Tab1_Titel extends Fragment {
                 } else {
                     if (datei_liste[i].getName().endsWith(".mp3")){
                         titel_liste.add(datei_liste[i]);
-                        Toast.makeText(this.getContext(), datei_liste[i] + "test", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this.getContext(), datei_liste[i] + "test", Toast.LENGTH_SHORT).show();
                         //textView.setText(textView.getText() + "Eine MP3 wurde gefunden und der Liste hinzugefügt" );
                         //textView.setText(textView.getText() + "<" + datei_liste[i].getName() + ">");
                         //textView.setText(textView.getText() + "<"+datei_liste[i]+">");
