@@ -122,12 +122,21 @@ public class Tab1_Titel extends Fragment {
         Cursor LiedCursor = musicResolver.query(musicUri, null, null, null, null);
 
         if(LiedCursor!=null && LiedCursor.moveToFirst()){
-
-            int titleColumn = LiedCursor.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE);
+            int titelcol = LiedCursor.getColumnIndex
+                    (android.provider.MediaStore.Audio.Media.TITLE);
+            int idcol = LiedCursor.getColumnIndex
+                    (android.provider.MediaStore.Audio.Media._ID);
+            int interpretcol = LiedCursor.getColumnIndex
+                    (android.provider.MediaStore.Audio.Media.ARTIST);
 
             do {
-                String thisTitle = LiedCursor.getString(titleColumn);
-                LiedListe.add(new Lied(thisTitle));
+
+                long konId = LiedCursor.getLong(idcol);
+                String konTitel = LiedCursor.getString(titelcol);
+                String konInterpret = LiedCursor.getString(interpretcol);
+
+                LiedListe.add(new Lied(konId,konTitel,konInterpret));
+                Toast.makeText(this.getContext(), konInterpret, Toast.LENGTH_SHORT).show();
             }
             while (LiedCursor.moveToNext());
         }

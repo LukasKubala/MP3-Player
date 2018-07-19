@@ -2,19 +2,25 @@ package com.mp3.analukpat.mp3_player;
 
 class Lied {
 
+    private long id;
+    private String titel;
+    private String interpret;
 
+    public Lied(long liedId, String liedTitel, String liedInterpret){
+        id=liedId;
+        titel=liedTitel;
+        interpret=liedInterpret;
+    }
 
-    private String Titel = "";
+    public long getId() {
+        return id;
+    }
 
-    public Lied(String titel) {
-        Titel = titel;
+    public String getInterpret() {
+        return interpret;
     }
 
     public String getTitel() {
-        return Titel;
-    }
-
-    public void setTitel(String titel) {
-        Titel = titel;
+        return titel;
     }
 }
