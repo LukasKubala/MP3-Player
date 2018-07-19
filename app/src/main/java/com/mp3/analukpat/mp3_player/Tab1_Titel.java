@@ -43,16 +43,17 @@ public class Tab1_Titel extends Fragment {
 
        //Dieser Pfad wird durchsucht: storage/emulated/0/Music/
         //Das ist nicht die externe SD Karte, sondern der interne Speicher!
-        pfad_durchsuchen(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)+"");
+        //pfad_durchsuchen(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)+"");
 
 
         findeLieder();
         ArrayList<String> Liste_der_Titel_als_Strings = new ArrayList<>();
-        for(int i = 0; i < LiedListe.size(); i ++){
+
+       // for(int i = 0; i < LiedListe.size(); i ++){
             //MediaMetadataRetriever mmr = new MediaMetadataRetriever();
             //mmr.setDataSource(titel_liste.get(i).getAbsolutePath());
 
-            textView.setText(textView.getText()+ "" + LiedListe.get(i));
+            //textView.setText(textView.getText()+ "" + LiedListe);
             //String albumName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
             //String titleAuthor = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_AUTHOR);
             //String titleName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
@@ -62,26 +63,28 @@ public class Tab1_Titel extends Fragment {
             //textView.setText(textView.getText() + " <<" + titleName + " by " + titleAuthor + ">>");
 
 
-        }
+      //  }
 
         //in der onCreate Methode wird der ArrayAdapter erzeugt
-        ArrayAdapter<String> Titel_View_Adapter =
+        /*ArrayAdapter<String> Titel_View_Adapter =
                 new ArrayAdapter<>(
                         getActivity(), // Die aktuelle Umgebung
                         R.layout.list_item_titel, // ID der XML-Layout Datei der einzelnen Daten der ListView
                         R.id.list_item_titel_textview, // ID der TextView
-                        Liste_der_Titel_als_Strings); // Daten in einer ArrayList
+                        Liste_der_Titel_als_Strings); // Daten in einer ArrayList*/
 
-
-        //listview
+        AnzeigeAdapter AnzAdap = new AnzeigeAdapter(LiedListe,this.getContext());
         listViewTitel = rootView.findViewById(R.id.listViewTitel);
-        listViewTitel.setAdapter(Titel_View_Adapter);
+        listViewTitel.setAdapter(AnzAdap);
+        //listview
+        //listViewTitel = rootView.findViewById(R.id.listViewTitel);
+        //listViewTitel.setAdapter(Titel_View_Adapter);
 
         return rootView;
     }
 
 
-    ArrayList<File> titel_liste = new ArrayList<>();
+   /* ArrayList<File> titel_liste = new ArrayList<>();
     public void pfad_durchsuchen(String pfad) {
         File rootFolder = new File(pfad);
         File[] datei_liste;
@@ -110,10 +113,10 @@ public class Tab1_Titel extends Fragment {
         else{
             //textView.setText(textView.getText() + "Der angegebene Pfad enhält keine Dateien");
         }
-    }
+    }*/
 
 
-
+// diese Methode findet alle Lieder, die extern verfügbar sind und erstellt eine Liste
     public void findeLieder(){
         LiedListe= new ArrayList<Lied>();
 
@@ -136,7 +139,7 @@ public class Tab1_Titel extends Fragment {
                 String konInterpret = LiedCursor.getString(interpretcol);
 
                 LiedListe.add(new Lied(konId,konTitel,konInterpret));
-                Toast.makeText(this.getContext(), konInterpret, Toast.LENGTH_SHORT).show();
+
             }
             while (LiedCursor.moveToNext());
         }
