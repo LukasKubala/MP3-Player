@@ -1,7 +1,11 @@
 package com.mp3.analukpat.mp3_player;
 //Anzeige aller Titel
+import android.content.ContentResolver;
+import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,6 +29,7 @@ public class Tab1_Titel extends Fragment {
 
     TextView textView;
     ListView listViewTitel;
+    private ArrayList<Lied> LiedListe;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,19 +45,19 @@ public class Tab1_Titel extends Fragment {
         //Das ist nicht die externe SD Karte, sondern der interne Speicher!
         pfad_durchsuchen(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)+"");
 
-        textView.setText(Environment.DIRECTORY_MUSIC.toString());
 
+        findeLieder();
         ArrayList<String> Liste_der_Titel_als_Strings = new ArrayList<>();
-        for(int i = 0; i < titel_liste.size(); i ++){
-            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-            mmr.setDataSource(titel_liste.get(i).getAbsolutePath());
+        for(int i = 0; i < LiedListe.size(); i ++){
+            //MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            //mmr.setDataSource(titel_liste.get(i).getAbsolutePath());
 
+            textView.setText(textView.getText()+ "" + LiedListe.get(i));
+            //String albumName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+            //String titleAuthor = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_AUTHOR);
+            //String titleName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
 
-            String albumName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-            String titleAuthor = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_AUTHOR);
-            String titleName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-
-            Liste_der_Titel_als_Strings.add(titleName);
+            //Liste_der_Titel_als_Strings.add(titleName);
 
             //textView.setText(textView.getText() + " <<" + titleName + " by " + titleAuthor + ">>");
 
@@ -106,6 +111,29 @@ public class Tab1_Titel extends Fragment {
             //textView.setText(textView.getText() + "Der angegebene Pfad enhält keine Dateien");
         }
     }
+
+
+
+    public void findeLieder(){
+        LiedListe= new ArrayList<Lied>();
+
+        ContentResolver musicResolver = this.getContext().getContentResolver();
+        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        Cursor LiedCursor = musicResolver.query(musicUri, null, null, null, null);
+
+        if(LiedCursor!=null && LiedCursor.moveToFirst()){
+
+            int titleColumn = LiedCursor.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE);
+
+            do {
+                String thisTitle = LiedCursor.getString(titleColumn);
+                LiedListe.add(new Lied(thisTitle));
+            }
+            while (LiedCursor.moveToNext());
+        }
+    }
+
+
 
 
 }
