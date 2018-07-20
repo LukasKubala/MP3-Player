@@ -40,12 +40,11 @@ public class AnzeigeAdapter extends BaseAdapter {
     // hier werden nur Titel angezeigt
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        RelativeLayout lay = (RelativeLayout) liedinf.inflate(R.layout.fragment_tab1_titel, parent,false);
-        ListView ganzeView = (ListView) lay.findViewById(R.id.listViewTitel);
+        LinearLayout lay = (LinearLayout) liedinf.inflate(R.layout.list_item_titel, parent,false);
 
 
-        TextView titelV = (TextView) lay.findViewById(R.id.section_interpret);
-        TextView interpretV=(TextView)lay.findViewById(R.id.section_interpret);
+        TextView titelV = (TextView) lay.findViewById(R.id.sec_titel);
+        TextView interpretV=(TextView)lay.findViewById(R.id.sec_interpret);
 
 
 
@@ -53,7 +52,7 @@ public class AnzeigeAdapter extends BaseAdapter {
 
 
         titelV.setText(akt.getTitel());
-        //interpretV.setText(akt.getInterpret());
+        interpretV.setText(akt.getInterpret());
 
         lay.setTag(position);
 
