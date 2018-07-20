@@ -1,5 +1,6 @@
 package com.mp3.analukpat.mp3_player;
 //Anzeige aller Titel
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.File;
@@ -21,33 +23,47 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
-
+import android.os.IBinder;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.view.MenuItem;
+import android.view.View;
 import static android.os.Environment.DIRECTORY_MUSIC;
 import static android.os.Environment.getExternalStoragePublicDirectory;
+import com.mp3.analukpat.mp3_player.AbspielenService.MusikBinder;
+import android.os.IBinder;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.view.MenuItem;
+import android.view.View;
 
-public class Tab1_Titel extends Fragment {
+public class Tab1_Titel extends Fragment implements MediaController.MediaPlayerControl{
 
     TextView textView;
     ListView listViewTitel;
+
     private ArrayList<Lied> LiedListe;
+    /*private AbspielenService absService;
+    private Intent absIntent;
+    private boolean musikB=false;*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tab1_titel, container, false);
 
-       textView = rootView.findViewById(R.id.section_label);
+       //textView = rootView.findViewById(R.id.section_label);
 
 
-
-
-       //Dieser Pfad wird durchsucht: storage/emulated/0/Music/
-        //Das ist nicht die externe SD Karte, sondern der interne Speicher!
-        //pfad_durchsuchen(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)+"");
 
 
         findeLieder();
-        ArrayList<String> Liste_der_Titel_als_Strings = new ArrayList<>();
+
+       // ArrayList<String> Liste_der_Titel_als_Strings = new ArrayList<>();
 
        // for(int i = 0; i < LiedListe.size(); i ++){
             //MediaMetadataRetriever mmr = new MediaMetadataRetriever();
@@ -76,13 +92,28 @@ public class Tab1_Titel extends Fragment {
         AnzeigeAdapter AnzAdap = new AnzeigeAdapter(LiedListe,this.getContext());
         listViewTitel = rootView.findViewById(R.id.listViewTitel);
         listViewTitel.setAdapter(AnzAdap);
+
         //listview
         //listViewTitel = rootView.findViewById(R.id.listViewTitel);
         //listViewTitel.setAdapter(Titel_View_Adapter);
 
         return rootView;
+
     }
 
+    /*private ServiceConnection musikCon = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            AbspielenService.MusikBinder bin = (AbspielenService.MusikBinder)service;
+            absService=bin.kriegeService();
+            absService.setzeListe(LiedListe);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };*/
 
    /* ArrayList<File> titel_liste = new ArrayList<>();
     public void pfad_durchsuchen(String pfad) {
@@ -146,6 +177,66 @@ public class Tab1_Titel extends Fragment {
     }
 
 
+    @Override
+    public void start() {
+        super.onStart();
+        /*if(absIntent==null){
+            absIntent=new Intent(this.getContext(), AbspielenService.class);
+            this.getContext().bindService(absIntent, musikCon, Context.BIND_AUTO_CREATE);
+            this.getContext().startService(absIntent);
+        }*/
+    }
+    /*public void liedGew(Tab1_Titel view){
+        absService.waehleLied(Integer.parseInt(view.getTag().toString()));
+        absService.spieleLied();
+    }*/
+    @Override
+    public void pause() {
 
+    }
 
+    @Override
+    public int getDuration() {
+        return 0;
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return 0;
+    }
+
+    @Override
+    public void seekTo(int pos) {
+
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return false;
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPause() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return false;
+    }
+
+    @Override
+    public int getAudioSessionId() {
+        return 0;
+    }
 }

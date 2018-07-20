@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:id="@+id/constraintLayout"
+    android:id="@+id/list_items"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:onClick="liedGew">
 
     <TextView
         android:id="@+id/sec_titel"

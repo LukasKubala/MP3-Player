@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.MediaController.MediaPlayerControl;
 
 import java.io.IOException;
 import java.util.*;
@@ -28,7 +29,7 @@ public class Tab1_Einzel extends Fragment implements MediaPlayer.OnPreparedListe
     private TextView current_time, total_time;
     private Button playbtn, stoppbtn, previousbtn, nextbtn, shufflebtn;
     private MediaPlayer mediaPlayer;
-
+    private ArrayList<Lied> LiedListe;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
